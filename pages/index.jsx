@@ -1,7 +1,10 @@
+import Head from "next/head"
+import React, { useState, useCallback } from "react"
 import { Button, useToast } from "@chakra-ui/react"
+// api
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { getPosts } from "../services/post"
-import React, { useState, useCallback } from "react"
+// component
 import PostList from "../components/post.list"
 import PostCreate from "../components/post.create"
 import PostDetail from "../components/post.detail"
@@ -75,7 +78,7 @@ export default function Home() {
       position: "top",
     })
   }
-  
+
   // detail post
   const [idDetail, setIdDetail] = useState(0)
   const toggleDetail = (val) => {
@@ -124,6 +127,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Home | Rogersovich</title>
+      </Head>
       {loading && <LoadingOverlay isLoading={loading} />}
       <div className="tw-px-4 tw-py-4 tw-min-h-screen tw-bg-yellow-50">
         <div className="fcb">
