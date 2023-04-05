@@ -13,7 +13,7 @@ git clone https://github.com/rogersovich/nextjs-test-jsonplaceholder.git
 2. Navigate into the project directory:
 
 ```bash
-cd github-user-repo-search
+cd nextjs-test-jsonplaceholder
 ```
 
 3. Install the dependencies:
@@ -30,7 +30,7 @@ npm run dev
 
 ## Technologies Used
 - [Next JS](https://nextjs.org/)
-- [jsonplaceholder](https://jsonplaceholder.typicode.com/)
+- [Jsonplaceholder](https://jsonplaceholder.typicode.com/)
 - [Chakra UI](https://chakra-ui.com/)
 - [Tailnwind CSS](https://tailwindcss.com/)
 - [React Query](https://tanstack.com/query/v5/)
@@ -44,7 +44,7 @@ npm run dev
 List Post
 ![SS list](/public/img/json-test-list.jpg)
 Create Post
-![SS post](/public/img/json-test-post.jpg)
+![SS post](/public/img/json-test-create.jpg)
 Detail Post
 ![SS detail](/public/img/json-test-detail.jpg)
 Edit Post
