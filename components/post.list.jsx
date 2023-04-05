@@ -1,7 +1,7 @@
 import { Button, Box } from "@chakra-ui/react"
 import React from "react"
 
-const PostList = ({posts, hasNextPage, isFetchingNextPage, fetchNextPage}) => {
+const PostList = ({posts, hasNextPage, isFetchingNextPage, fetchNextPage, toggleDetail}) => {
   return (
     <>
       <div className="grid-12 tw-gap-4">
@@ -28,6 +28,7 @@ const PostList = ({posts, hasNextPage, isFetchingNextPage, fetchNextPage}) => {
                         colorScheme="green"
                         width={"full"}
                         variant={"solid"}
+                        onClick={() => toggleDetail(post.id)}
                       >
                         Detail
                       </Button>

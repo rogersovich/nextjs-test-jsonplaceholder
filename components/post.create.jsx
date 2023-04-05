@@ -86,7 +86,7 @@ const PostCreate = ({ isShow, toggleShow, onCreateSuccess, onCreateError, toggle
         closeOnOverlayClick={true}
       >
         <slot name="header">
-          <div>Create Post</div>
+          <div className="tw-text-gray-600">Create Post</div>
         </slot>
 
         <slot name="content">

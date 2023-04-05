@@ -4,15 +4,23 @@ import { getPosts } from "../services/post"
 import React, { useState, useCallback } from "react"
 import PostList from "../components/post.list"
 import PostCreate from "../components/post.create"
+import PostDetail from "../components/post.detail"
 import LoadingOverlay from "../components/loading.overlay"
 
 export default function Home() {
   const toast = useToast()
-  const [modalDialog, setModalDialog] = useState(false)
-  const toggleModal = useCallback(() => {
-    setModalDialog(!modalDialog)
-  }, [modalDialog])
+
   const [loading, setLoading] = useState(false)
+  // dialog create
+  const [dialogCreate, setDialogCreate] = useState(false)
+  const toggleDialogCreate = useCallback(() => {
+    setDialogCreate(!dialogCreate)
+  }, [dialogCreate])
+  // dialog detail
+  const [dialogDetail, setDialogDetail] = useState(false)
+  const toggleDialogDetail = useCallback(() => {
+    setDialogDetail(!dialogDetail)
+  }, [dialogDetail])
 
   const {
     isLoading,
@@ -36,27 +44,34 @@ export default function Home() {
     },
   })
 
+  // create post
   const onCreateSuccess = (res) => {
     setLoading(false)
     toast({
-      title: 'Post created.',
+      title: "Post created.",
       description: `User Id: ${res.userId}, Title: ${res.title}, Body: ${res.body},`,
-      status: 'success',
+      status: "success",
       duration: 2000,
       isClosable: true,
-      position: 'top'
+      position: "top",
     })
   }
-  const onCreateError = (res) => {
+  const onCreateError = () => {
     setLoading(false)
     toast({
-      title: 'Post Not Created.',
+      title: "Post Not Created.",
       description: "Im sorry ur create got error",
-      status: 'error',
+      status: "error",
       duration: 2000,
       isClosable: true,
-      position: 'top'
+      position: "top",
     })
+  }
+  // detail post
+  const [idDetail, setIdDetail] = useState(0)
+  const toggleDetail = (val) => {
+    toggleDialogDetail()
+    setIdDetail(val)
   }
 
   if (isLoading) {
@@ -69,6 +84,7 @@ export default function Home() {
 
   return (
     <>
+      {loading && <LoadingOverlay isLoading={loading} />}
       <div className="tw-px-4 tw-py-4 tw-min-h-screen tw-bg-yellow-50">
         <div className="fcb">
           <div className="bold tw-text-2xl tw-text-center">List Post</div>
@@ -77,7 +93,7 @@ export default function Home() {
               colorScheme="blue"
               width={"full"}
               variant={"solid"}
-              onClick={toggleModal}
+              onClick={(state) => toggleDialogCreate(state)}
             >
               Create Post
             </Button>
@@ -91,22 +107,29 @@ export default function Home() {
               hasNextPage={hasNextPage}
               isFetchingNextPage={isFetchingNextPage}
               fetchNextPage={fetchNextPage}
+              toggleDetail={toggleDetail}
             />
           </>
         ) : (
           <div>data kosong</div>
         )}
       </div>
-      {modalDialog && (
+      {dialogCreate && (
         <PostCreate
-          isShow={modalDialog}
-          toggleShow={toggleModal}
+          isShow={dialogCreate}
+          toggleShow={toggleDialogCreate}
           onCreateSuccess={onCreateSuccess}
           onCreateError={onCreateError}
           toggleLoading={() => setLoading(true)}
         />
       )}
-      {loading && <LoadingOverlay isLoading={loading} />}
+      {dialogDetail && (
+        <PostDetail
+          isShow={dialogDetail}
+          toggleShow={toggleDetail}
+          id={idDetail}
+        />
+      )}
     </>
   )
 }
