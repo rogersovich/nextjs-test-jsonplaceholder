@@ -3,13 +3,14 @@ import { getPost, getPostByUsers } from "../services/post"
 import { useQuery } from "@tanstack/react-query"
 
 const PostDetail = ({ isShow, toggleShow, id }) => {
+  // get detail post api
   const postQuery = useQuery({
     queryKey: ["post"],
     queryFn: () => {
       return getPost(id)
     },
   })
-
+  // get users api
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: async () => {

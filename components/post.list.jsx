@@ -1,7 +1,14 @@
 import { Button, Box } from "@chakra-ui/react"
 import React from "react"
 
-const PostList = ({posts, hasNextPage, isFetchingNextPage, fetchNextPage, toggleDetail}) => {
+const PostList = ({
+  posts,
+  hasNextPage,
+  isFetchingNextPage,
+  fetchNextPage,
+  toggleDetail,
+  toggleEdit
+}) => {
   return (
     <>
       <div className="grid-12 tw-gap-4">
@@ -22,7 +29,7 @@ const PostList = ({posts, hasNextPage, isFetchingNextPage, fetchNextPage, toggle
                   <div className="tw-text-[14px] tw-whitespace-break tw-mt-1">
                     {`${post.body}`}
                   </div>
-                  <div className="tw-mt-4 grid-3 tw-gap-4">
+                  <div className="tw-mt-4 grid-2 tw-gap-4">
                     <div>
                       <Button
                         colorScheme="green"
@@ -39,17 +46,9 @@ const PostList = ({posts, hasNextPage, isFetchingNextPage, fetchNextPage, toggle
                         color={"white"}
                         width={"full"}
                         variant={"solid"}
+                        onClick={() => toggleEdit(post.id)}
                       >
                         Edit
-                      </Button>
-                    </div>
-                    <div>
-                      <Button
-                        colorScheme="red"
-                        width={"full"}
-                        variant={"solid"}
-                      >
-                        Hapus
                       </Button>
                     </div>
                   </div>

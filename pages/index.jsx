@@ -5,11 +5,13 @@ import React, { useState, useCallback } from "react"
 import PostList from "../components/post.list"
 import PostCreate from "../components/post.create"
 import PostDetail from "../components/post.detail"
+import PostEdit from "../components/post.edit"
 import LoadingOverlay from "../components/loading.overlay"
 
 export default function Home() {
+  // init toast
   const toast = useToast()
-
+  // init loading state
   const [loading, setLoading] = useState(false)
   // dialog create
   const [dialogCreate, setDialogCreate] = useState(false)
@@ -21,7 +23,13 @@ export default function Home() {
   const toggleDialogDetail = useCallback(() => {
     setDialogDetail(!dialogDetail)
   }, [dialogDetail])
+  // dialog edit
+  const [dialogEdit, setDialogEdit] = useState(false)
+  const toggleDialogEdit = useCallback(() => {
+    setDialogEdit(!dialogEdit)
+  }, [dialogEdit])
 
+  // get posts api
   const {
     isLoading,
     isError,
@@ -44,7 +52,7 @@ export default function Home() {
     },
   })
 
-  // create post
+  // callback create post
   const onCreateSuccess = (res) => {
     setLoading(false)
     toast({
@@ -67,11 +75,43 @@ export default function Home() {
       position: "top",
     })
   }
+  
   // detail post
   const [idDetail, setIdDetail] = useState(0)
   const toggleDetail = (val) => {
     toggleDialogDetail()
     setIdDetail(val)
+  }
+
+  // edit post
+  const [idEdit, setIdEdit] = useState(0)
+  const toggleEdit = (val) => {
+    toggleDialogEdit()
+    setIdEdit(val)
+  }
+
+  // callback update post
+  const onUpdateSuccess = (res) => {
+    setLoading(false)
+    toast({
+      title: "Post Updated.",
+      description: `User Id: ${res.userId}, Title: ${res.title}, Body: ${res.body},`,
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    })
+  }
+  const onUpdateError = () => {
+    setLoading(false)
+    toast({
+      title: "Post Not Updated.",
+      description: "Im sorry ur create got error",
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+      position: "top",
+    })
   }
 
   if (isLoading) {
@@ -108,6 +148,7 @@ export default function Home() {
               isFetchingNextPage={isFetchingNextPage}
               fetchNextPage={fetchNextPage}
               toggleDetail={toggleDetail}
+              toggleEdit={toggleEdit}
             />
           </>
         ) : (
@@ -128,6 +169,16 @@ export default function Home() {
           isShow={dialogDetail}
           toggleShow={toggleDetail}
           id={idDetail}
+        />
+      )}
+      {dialogEdit && (
+        <PostEdit
+          isShow={dialogEdit}
+          toggleShow={toggleEdit}
+          id={idEdit}
+          onUpdateSuccess={onUpdateSuccess}
+          onUpdateError={onUpdateError}
+          toggleLoading={() => setLoading(true)}
         />
       )}
     </>

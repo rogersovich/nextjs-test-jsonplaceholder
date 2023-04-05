@@ -12,6 +12,14 @@ import { createPosts } from "../services/post"
 import { useQuery, useMutation } from "@tanstack/react-query"
 
 const PostCreate = ({ isShow, toggleShow, onCreateSuccess, onCreateError, toggleLoading }) => {
+  // ini data form
+  const initialValues = {
+    title: null,
+    body: null,
+    userId: null,
+  }
+
+  // get users api
   const {
     isLoading,
     isError,
@@ -26,18 +34,12 @@ const PostCreate = ({ isShow, toggleShow, onCreateSuccess, onCreateError, toggle
     },
   })
 
-  function mapUserToOption(user) {
-    return { value: user.id, label: user.name }
-  }
+  // filter response users
+  const userOptions = users
+    ? users.map((user) => ({ value: user.id, label: user.name }))
+    : []
 
-  const options = (users || []).map(mapUserToOption)
-
-  const initialValues = {
-    title: null,
-    body: null,
-    userId: null,
-  }
-
+  // make react hook form
   const {
     register,
     handleSubmit,
@@ -63,6 +65,7 @@ const PostCreate = ({ isShow, toggleShow, onCreateSuccess, onCreateError, toggle
     },
   })
 
+  // submit create
   const onSubmit = (data) => {
     mutation.mutate(data)
   }
@@ -99,7 +102,7 @@ const PostCreate = ({ isShow, toggleShow, onCreateSuccess, onCreateError, toggle
                   errors={errors.userId}
                   control={control}
                   name={"userId"}
-                  options={options}
+                  options={userOptions}
                 ></CsSelect>
               </div>
               <div className="tw-mb-3">

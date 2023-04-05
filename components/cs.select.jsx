@@ -45,6 +45,7 @@ const CsSelect = ({
               value={options.find((option) => option.value === value)}
               styles={customStyles}
               menuPosition="fixed"
+              
             />
           )}
         />
