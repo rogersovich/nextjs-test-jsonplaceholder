@@ -1,6 +1,6 @@
 # Jsonplaceholder Post App
 
-This is a Next JS application that allows users to see list, create, detail and edit using the [jsonplaceholder](https://jsonplaceholder.typicode.com/) API.
+This is a Next JS application that allows users to see list, create, detail and edit Post using the [jsonplaceholder](https://jsonplaceholder.typicode.com/) API.
 
 ## Installation
 
